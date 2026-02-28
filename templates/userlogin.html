@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - BUYROUTE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c56a316195.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --background-color: #f0f5ff;
+            --form-background-color: #ffffff;
+            --text-dark: #212529;
+            --text-light: #6c757d;
+            --border-color: #dee2e6;
+            --input-bg-color: #f8f9fa;
+        }
+
+        /* Navbar styles - NO CHANGES */
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0.8rem 1rem;
+            font-family: 'Montserrat', sans-serif;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 1%;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-nav .nav-link {
+            color: #6c757d !important;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #0d6efd !important;
+        }
+
+        /* Body and Page Styles - MODIFIED */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #f0f5ff 100%);
+            background-attachment: fixed;
+            display: flex;
+            align-items: center; /* Vertically centers the form */
+            justify-content: center; /* Horizontally centers the form */
+            min-height: 100vh;
+            padding: 0 1rem; /* Added padding for smaller screens */
+        }
+        
+        /* The padding-top on the body is removed as the flex centering handles the placement */
+        /* and the form is now centered regardless of the navbar's height */
+
+        /* Login Form Styles - MODIFIED */
+        .login-form-wrapper {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--form-background-color);
+            padding: 40px;
+            border-radius: 15px;
+            color: var(--text-dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-top: 50px; /* Adjusted margin to ensure it sits below the navbar */
+        }
+
+        .form-title {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-dark);
+        }
+        
+        .input-group-text {
+            background-color: var(--input-bg-color);
+            border: 1px solid var(--border-color);
+            border-right: none;
+            color: var(--primary-color);
+            border-radius: 0.25rem 0 0 0.25rem;
+        }
+
+        .form-control {
+            background-color: var(--input-bg-color);
+            border: 1px solid var(--border-color);
+            border-left: none;
+            padding: 10px 15px;
+            border-radius: 0 0.25rem 0.25rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background-color: #ffffff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #0d6efd, #007bff);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+            opacity: 0.95;
+        }
+
+        .extra-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .extra-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .extra-links a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .alert {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            min-width: 300px;
+            z-index: 1051;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments for the form positioning */
+        @media (max-width: 768px) {
+            .login-form-wrapper {
+                margin-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <a href="{{url_for('index')}}"><img src="/static/BUYROUTE.png" alt="Logo" class="logo" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('contact')}}">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('cart')}}">View cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('myorders')}}">My Orders</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          SignUp
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                          <li><a class="dropdown-item" href="{{url_for('admincreate')}}">Admin Signup</a></li>
+                          <li><a class="dropdown-item" href="{{url_for('usercreate')}}">User SignUp</a></li>
+                        </ul>
+                    </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Login
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                          <li><a class="dropdown-item" href="{{url_for('adminlogin')}}">Admin Login</a></li>
+                          <li><a class="dropdown-item active" href="{{url_for('userlogin')}}">User Login</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" method="post" action="#">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-danger alert-dismissible fade show shadow-lg" role="alert" style="z-index:1050; position:fixed; top:80px; right:40px; min-width:300px; border-radius:12px;">
+          <i class="fas fa-exclamation-triangle me-2"></i> {{ messages[0] }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="login-form-wrapper">
+        <form method="post" action="{{url_for('userlogin')}}">
+            <h2 class="form-title">Welcome Back!</h2>
+            
+            <div class="input-group mb-4">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" name='email' placeholder="name@example.com" required>
+            </div>
+
+            <div class="input-group mb-4">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" name='password' placeholder="Enter your password" required>
+            </div>
+            
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-submit">Log In</button>
+            </div>
+
+            <div class="extra-links">
+                <a href="#">Forgot password?</a>
+                <a href="{{url_for('usercreate')}}">Create an account</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BUYROUT</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        :root {
+            /* Define a color palette using CSS variables for easier management */
+            --primary-bg-color: #1a1a2e; /* Deep dark blue/purple */
+            --secondary-bg-color: #0f0f1c; /* Even darker blue/purple for contrast */
+            --accent-color-light: #99ffff; /* Soft cyan/teal */
+            --accent-color-dark: #66ccff; /* Slightly darker blue for hover */
+            --text-color-light: rgba(255, 255, 255, 0.9); /* Off-white for general text */
+            --text-color-placeholder: rgba(255, 255, 255, 0.6); /* Lighter for placeholders */
+            --border-color: rgba(255, 255, 255, 0.2); /* Subtle white border */
+            --focus-border-color: var(--accent-color-light); /* Accent color for focus */
+            --box-shadow-color: rgba(153, 255, 255, 0.4); /* Soft shadow with accent color */
+            --form-bg-opacity: 0.3; /* Opacity for the mainbox background */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            /* Using flexbox for perfect centering on the page */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            
+            /* Replaced image with a subtle linear gradient for a cleaner, consistent look */
+            background: linear-gradient(135deg, var(--primary-bg-color) 0%, var(--secondary-bg-color) 100%);
+            background-attachment: fixed; /* Keeps the background fixed during scroll if content overflows */
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Professional, widely available font */
+            color: var(--text-color-light);
+            line-height: 1.6;
+        }
+
+        .mainbox {
+            width: 90vw; /* Use vw for better responsiveness */
+            max-width: 900px; /* Set a max-width to prevent it from getting too wide on large screens */
+            height: 500px;
+            border: 1px solid var(--border-color); /* Subtle white border */
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden; /* Ensures child elements respect border-radius */
+            
+            /* Softer backdrop filter for a more elegant frosted glass effect */
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%); /* For Safari support */
+            
+            background-color: rgba(0, 0, 0, var(--form-bg-opacity)); /* Slightly transparent dark background for the box */
+            transition: all 0.5s ease-in-out; /* Smooth transition for all changes */
+        }
+
+        .mainbox:hover {
+            box-shadow: 0 0 25px var(--box-shadow-color); /* More spread out, accent-colored shadow */
+            transform: translateY(-5px); /* Subtle lift effect on hover */
+        }
+
+        .side1 {
+            width: 45%; /* Adjusted width for better balance */
+            height: 100%; /* Take full height of parent */
+            border-radius: 20px 0 0 20px; /* Match mainbox border-radius, only on left side */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Center image vertically and horizontally */
+            background: linear-gradient(45deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1)); /* Subtle internal gradient */
+        }
+
+        .imgbox {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Ensures the image is truly centered within side1 */
+            padding: 20px; /* Add some padding around the image */
+        }
+
+        .imgbox img {
+            max-width: 80%; /* Ensure image scales down */
+            max-height: 80%; /* Ensure image scales down */
+            object-fit: contain; /* Keeps aspect ratio */
+            filter: drop-shadow(0 0 10px rgba(153, 255, 255, 0.5)); /* Adds a glow effect to the image, using accent */
+            transition: transform 0.3s ease;
+        }
+
+        .imgbox img:hover {
+            transform: scale(1.05); /* Slight zoom on image hover */
+        }
+
+        .side2 { /* Added for clarity on the form side */
+            width: 55%; /* Remaining width for the form */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 30px; /* More balanced padding */
+            box-sizing: border-box; /* Include padding in width/height calculation */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent-color-light);
+            font-size: 2.2em; /* Slightly larger heading */
+            text-shadow: 0 0 8px rgba(153, 255, 255, 0.4); /* More pronounced glow */
+            font-weight: 600; /* Bolder font weight */
+        }
+
+        a {
+            color: var(--accent-color-light); /* Professional accent color */
+            text-decoration: none;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color-dark); /* Slightly darker on hover */
+            text-decoration: underline;
+        }
+
+        .form-group { /* Added a class for better spacing of form elements - using mb-3 from Bootstrap */
+            margin-bottom: 20px; /* Space between form fields, overriding Bootstrap's mb-3 if needed */
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 0; /* Vertical padding, no horizontal for full width */
+            border: none; /* Remove default border */
+            border-bottom: 1px solid var(--border-color); /* Subtle bottom border */
+            background: transparent;
+            color: var(--text-color-light) !important; /* Ensure input text color is visible */
+            font-size: 1.1em;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            outline: none; /* Remove default outline */
+        }
+
+        input::placeholder {
+            color: var(--text-color-placeholder) !important; /* Lighter placeholder color */
+        }
+
+        input:focus {
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border-color: var(--focus-border-color) !important; /* Accent color on focus */
+            border-radius: unset; /* Maintain unset border-radius */
+        }
+
+        input:valid {
+            background-color: transparent !important;
+        }
+
+        /* Autofill styles for better compatibility and look */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            background-color: transparent !important;
+            -webkit-text-fill-color: var(--text-color-light) !important;
+            transition: background-color 5000s ease-in-out 0s; /* Fix autofill background */
+        }
+
+        .btn {
+            display: block; /* Make button take full width */
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 25px; /* Space above button */
+            background: linear-gradient(45deg, var(--accent-color-light), var(--accent-color-dark)); /* Gradient button */
+            color: var(--secondary-bg-color); /* Dark text on light button */
+            border: none;
+            border-radius: 8px; /* Slightly rounded corners */
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+
+        .btn:hover {
+            transform: translateY(-2px); /* Lift effect on hover */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0.95; /* Slightly reduce opacity for a subtle effect */
+        }
+
+        .forgot {
+            text-align: right; /* Keep aligned to right */
+            margin-top: 10px; /* Space above link */
+            font-size: 0.9em;
+        }
+
+        .signup { /* Added specific class for the signup paragraph */
+            text-align: center; /* Center the signup text */
+            margin-top: 25px; /* Adjust margin from the button */
+        }
+        
+        /* Flash message styling */
+        .flash-message {
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 128, 0, 0.7); /* Green background for success, adjust as needed */
+            padding: 10px 20px;
+            margin: 10px auto;
+            border-radius: 5px;
+            max-width: 500px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+
+        @media (max-width: 768px) {
+            body {
+                /* On smaller screens, allow scrolling if content is too tall */
+                min-height: auto;
+                align-items: flex-start; /* Align to top on smaller screens */
+                padding: 5% 0; /* Add some vertical padding */
+            }
+
+            .mainbox {
+                flex-direction: column; /* Stack elements vertically */
+                width: 90vw;
+                height: auto; /* Auto height based on content */
+                margin-top: 5vh; /* Margin from top */
+                margin-bottom: 5vh; /* Margin from bottom */
+            }
+
+            .side1 {
+                width: 100%; /* Take full width */
+                height: 200px; /* Fixed height for the image section */
+                border-radius: 20px 20px 0 0; /* Rounded top corners only */
+                display: flex; /* Keep flex to center image */
+                order: -1; /* Place side1 on top */
+            }
+            
+            .imgbox {
+                padding: 15px; /* Adjust padding for smaller screens */
+            }
+
+            .imgbox img {
+                max-width: 70%;
+                max-height: 70%;
+            }
+
+            .side2 {
+                width: 100%; /* Take full width */
+                padding: 30px 25px; /* Adjusted padding */
+            }
+
+            h2 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mainbox {
+                width: 95vw; /* Even wider on very small screens */
+            }
+            .side2 {
+                padding: 25px 20px;
+            }
+            .btn {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+            .form-control {
+                font-size: 1em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% endblock %}
+
+    <div class="mainbox">
+        <div class="side1">
+            <div class="imgbox">
+                <img src="{{ url_for('static', filename='31818468_7884399.jpg') }}" alt="BUYROUT logo">
+            </div>
+        </div>
+        <div class="side2">
+            <h2>Welcome Back!</h2> <form action="#" method="post">
+                <div class="form-group mb-3"> <label for="email" class="form-label">Email</label> <input type="email" class="form-control" id="email" placeholder="Enter your email ID" name="email" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn">Login</button> <p class="signup">Don't have an account? <a href="{{ url_for('usercreate') }}">Sign Up</a></p>
+                <p class="forgot"><a href="#">Forgot Password?</a></p> </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html> -->

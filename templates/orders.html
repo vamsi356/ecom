@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - BUYROUTE</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        xintegrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c56a316195.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Styles from Index */
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 1%;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .logout {
+            color: #000 !important;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .logout:hover {
+            color: #d72660 !important;
+        }
+
+        /* Navbar styles from Index */
+        
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0.8rem 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .navbar-nav .nav-link {
+            color: #6c757d !important;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #0d6efd !important;
+        }
+        
+
+        /* UPDATED Styles for the Orders Page to match Navbar */
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Light gradient background to match index page */
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            /* Dark text color for readability */
+            color: #212529;
+            /* Add padding to prevent content from being hidden by the fixed navbar */
+            padding-top: 80px; 
+        }
+
+        .order-container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .order-title {
+            color: #343a40;
+            font-weight: 700;
+        }
+
+        /* Light theme for the table */
+        .styled-table {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: none;
+        }
+
+        .styled-table thead tr {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 1rem 1.25rem;
+            vertical-align: middle;
+            border-top: 1px solid #f1f1f1;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f7ff;
+        }
+
+        .btn-invoice {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+        }
+        .btn-invoice:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar from index.html -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <a href="{{url_for('index')}}"><img src="/static/BUYROUTE.png" alt="Logo" class="logo" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('contact')}}">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('cart')}}">View cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{url_for('myorders')}}">My Orders</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Category
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                            <li><a class="dropdown-item" href="{{url_for('category', category='home appliances')}}">Home
+                                    Appliances</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{{url_for('category', category='electronics')}}">Electronics</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('category', category='fashion')}}">Fashion</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{url_for('category', category='grocery')}}">Grocery</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{url_for('category', category='sports')}}">Sports</a>
+                            </li>
+                        </ul>
+                    </li> -->
+                    {% if not session.get('user') and not session.get('admin') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            SignUp
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{url_for('admincreate')}}">Admin Signup</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{url_for('usercreate')}}">User SignUp</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{url_for('adminlogin')}}">Admin Login</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{url_for('userlogin')}}">User Login</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item mt-2">
+                        <a href="{{url_for('logout')}}" class="logout">Logout</a><br>
+                    </li>
+                </ul>
+                <form class="d-flex" method="post" action="{{url_for('searchdata')}}">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Orders Page Content -->
+    <div class="container order-container">
+        <h1 class="text-center mb-4 order-title">My Order History</h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table styled-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in user_orders %}
+                            <tr>
+                                <td>#{{i[0]}}</td>
+                                <td>{{i[1]}}</td>
+                                <td>{{i[3]}}</td>
+                                <td>₹{{i[2]}}</td>
+                                <td>{{i[5]}}</td>
+                                <td><span class="badge bg-success">{{i[4]}}</span></td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-invoice">
+                                        Get Invoice
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4">You have not placed any orders yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        xintegrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --background-start: #0f2027;
+            --background-mid: #203a43;
+            --background-end: #2c5364;
+            --text-color: #f0f0f0;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--background-start), var(--background-mid), var(--background-end));
+            color: var(--text-color);
+            min-height: 100%;
+        }
+
+        .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        /* Styled Flashed Messages */
+        .alert {
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            font-weight: 400;
+        }
+
+        /* The "Frosted Glass" Table Style */
+        .styled-table {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            overflow: hidden; /* Important for the border-radius to clip table corners */
+        }
+        
+        .styled-table thead tr {
+            background: rgba(255, 255, 255, 0.15); /* Slightly more opaque header */
+            color: #ffffff;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 1rem 1.25rem;
+            vertical-align: middle; /* Aligns content vertically, including the button */
+        }
+
+        /* Override Bootstrap's dark table colors to keep our glass effect */
+        .table-dark {
+            --bs-table-bg: transparent;
+            --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+            --bs-table-hover-bg: rgba(255, 255, 255, 0.1);
+            border-color: var(--glass-border);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category or 'info' }} text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <h1 class="text-center mb-4">My Order History</h1>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table styled-table table-dark table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in user_orders %}
+                        <tr>
+                            <td>{{i[0]}}</td>
+                            <td>{{i[1]}}</td>
+                            <td>{{i[3]}}</td>
+                            <td>₹ {{i[2]}}</td>
+                            <td>{{i[5]}}</td>
+                            <td>{{i[4]}}</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-outline-light">
+                                    Get Invoice
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">You have not placed any orders yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html> -->

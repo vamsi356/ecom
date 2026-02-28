@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item | BUYROUTE Admin</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bs-primary-rgb: 67, 83, 235;
+            --bs-body-bg: #f4f7f6;
+            --bs-body-color: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            display: flex;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .sidebar-header .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .sidebar-header .logo-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #111;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin: 0 1rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #555;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+        }
+
+        .nav-link:hover {
+            background-color: #f0f2ff;
+            color: rgb(var(--bs-primary-rgb));
+        }
+
+        .nav-link.active {
+            background-color: rgb(var(--bs-primary-rgb));
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(var(--bs-primary-rgb), 0.3);
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .header-title {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .user-profile .dropdown-toggle::after {
+            display: none;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* --- Form Card --- */
+        .form-card {
+            background: #fff;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: -260px;
+            }
+            .main-content {
+                width: 100%;
+                margin-left: 0;
+            }
+            body.sidebar-toggled .sidebar {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="{{ url_for('static', filename='BUYROUTE.png') }}" alt="Logo" class="logo" />
+            <span class="logo-text">BUYROUTE</span>
+        </div>
+        <ul class="nav flex-column sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('adminpanel') }}">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{url_for('additem')}}">
+                    <i class="bi bi-plus-square-fill"></i>
+                    <span>Add Item</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('viewallitems')}}">
+                    <i class="bi bi-box-fill"></i>
+                    <span>View All Items</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('viewallorders') }}">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Customers</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="btn d-lg-none" type="button" id="sidebar-toggle-btn">
+                <i class="bi bi-list"></i>
+            </button>
+            <h1 class="header-title">Add New Item</h1>
+            
+            <div class="d-flex align-items-center">
+                <div class="dropdown user-profile">
+                    <a href="#" class="d-flex align-items-center dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://i.pravatar.cc/40?u={{session.get('admin')}}" alt="Admin" class="me-2">
+                        <div>
+                            <span class="d-none d-md-block">{{ session.get('admin', 'Admin') }}</span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        <li><a class="dropdown-item" href="{{url_for('adminupdate')}}"><i class="bi bi-person-circle me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{{url_for('logout')}}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <main>
+            <!-- Flashed Messages -->
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <div class="card form-card">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        <!-- Item Name -->
+                        <div class="mb-3">
+                            <label for="itemName" class="form-label">Item Name</label>
+                            <input type="text" class="form-control" id="itemName" placeholder="e.g., Wireless Bluetooth Headphones" name="title" required>
+                        </div>
+
+                        <!-- Item Description -->
+                        <div class="mb-3">
+                            <label for="itemDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="itemDescription" name="Discription" rows="4" placeholder="Provide a detailed description of the item..."></textarea>
+                        </div>
+
+                        <!-- Row for Quantity, Price, and Category -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label for="itemQuantity" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" name="quantity" id="itemQuantity" placeholder="e.g., 50" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="itemPrice" class="form-label">Price (₹)</label>
+                                <input type="number" class="form-control" name="price" id="itemPrice" placeholder="e.g., 2499" step="0.01" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="itemCategory" class="form-label">Category</label>
+                                <select name="category" id="itemCategory" class="form-select">
+                                    <option selected disabled>Choose...</option>
+                                    <option value="Home appliances">Home Appliances</option>
+                                    <option value="Grocery">Grocery</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Sports">Sports</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label for="itemImage" class="form-label">Item Image</label>
+                            <input class="form-control" type="file" name="file" id="itemImage" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Add Item to Store</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple script to toggle sidebar on mobile
+        document.getElementById('sidebar-toggle-btn').addEventListener('click', function() {
+            document.body.classList.toggle('sidebar-toggled');
+        });
+    </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Item</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .classic-form {
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 32px 28px 24px 28px;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .classic-form label {
+            font-weight: 500;
+            color: #343a40;
+        }
+        .classic-form input[type="text"],
+        .classic-form input[type="number"],
+        .classic-form textarea,
+        .classic-form select {
+            background: #f5f5f5;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            color: #212529;
+        }
+        .classic-form input[type="file"] {
+            background: #f5f5f5;
+            color: #495057;
+        }
+        .classic-form .btn-warning {
+            width: 100%;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .classic-form .box {
+            display: flex;
+            gap: 16px;
+        }
+        .classic-form .box > div,
+        .classic-form .box .dropdown {
+            flex: 1;
+        }
+        .classic-form textarea {
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center style="color: #856404; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; margin-top: 16px; padding: 8px 0;">{{ message }}</center>
+    {% endfor %}  
+  {% endif %}
+{% endwith %}
+    <form method="post" enctype="multipart/form-data" class="classic-form">
+        <h3 class="mb-4 text-center" style="color:#495057;">Add New Item</h3>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Name</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Title of the item"
+                name="title" required/>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Description of the item"
+                name="Discription" rows="5"></textarea>
+        </div>
+        <div class="mb-3 box">
+            <div>
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control" name="quantity" id="quantity" required />
+            </div>
+            <div>
+                <label for="Price" class="form-label">Price</label>
+                <input type="number" class="form-control" name="price" id="Price" required />
+            </div>
+            <div>
+                <label for="Category" class="form-label">Category</label>
+                <select name="category" id="Category" class="form-select">
+                    <option value="Home appliances">Home Appliances</option>
+                    <option value="Grocery">Grocery</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Electronics">Electronic</option>
+                    <option value="Sports">Sports</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Image</label>
+            <input class="form-control" type="file" name="file" id="formFile" />
+        </div>
+        <button class="btn btn-warning">Submit</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html> -->

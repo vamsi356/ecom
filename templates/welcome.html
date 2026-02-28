@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUYROUTE | Elevate Your Everyday</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #b22222;
+            --secondary-color: #f0f0f0;
+            --text-dark: #333;
+            --text-light: #fff;
+            --font-main: 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            background-color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .navbar-transparent {
+            background-color: rgba(255, 255, 255, 0);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.4s ease-in-out;
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('https://cdn.wallpapersafari.com/51/58/2pVMUs.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding-left: 10%;
+            color: var(--text-light);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .btn-main {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.8rem 2.5rem;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-main:hover {
+            background-color: #991f1f;
+            transform: scale(1.05);
+        }
+
+        .about-section {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .about-section p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding-left: 5%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-transparent navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BUYROUTE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">ELEVATE YOUR EVERYDAY</h1>
+            <p class="hero-subtitle">Shop the collection and discover your unique style.</p>
+            <a href="{{url_for('index')}}"><button class="btn btn-main">Shop Now</button></a>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <h2>About Us</h2>
+        <p>At BUYROUTE, we are dedicated to providing a curated selection of high-quality products that reflect modern style and timeless elegance. Our mission is to make exceptional design accessible to everyone, ensuring a seamless and enjoyable shopping experience from start to finish. We believe in authenticity, quality, and a commitment to our customers that goes beyond the sale.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

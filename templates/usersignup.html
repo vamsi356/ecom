@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup - BUYROUTE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c56a316195.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --background-color: #f0f5ff;
+            --form-background-color: #ffffff;
+            --text-dark: #212529;
+            --text-light: #6c757d;
+            --border-color: #dee2e6;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0.8rem 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 1%;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-nav .nav-link {
+            color: #494949 !important;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #414040 !important;
+        }
+
+        /* Body and Page Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            background-image: linear-gradient(135deg, #e0f7fa 0%, #f0f5ff 100%);
+            padding-top: 120px; /* Adjust for fixed navbar */
+            padding-bottom: 2rem;
+            display: flex;
+            align-items: flex-start; /* Align form to the top */
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Signup Form Styles */
+        .signup-form-wrapper {
+            width: 100%;
+            max-width: 550px; /* Increased width slightly */
+            background-color: var(--form-background-color);
+            padding: 40px;
+            border-radius: 15px;
+            color: var(--text-dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-title {
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-right: none;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+        }
+        
+        .form-control:focus {
+            background-color: #ffffff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <a href="{{url_for('index')}}"><img src="/static/BUYROUTE.png" alt="Logo" class="logo" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('contact')}}">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('cart')}}">View cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('myorders')}}">My Orders</a>
+                    </li>
+                     <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Category
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item" href="{{url_for('category', category='home appliances')}}">Home Appliances</a></li>
+              <li><a class="dropdown-item" href="{{url_for('category', category='electronics')}}">Electronics</a></li>
+              <li><a class="dropdown-item" href="{{url_for('category', category='fashion')}}">Fashion</a></li>
+              <li><a class="dropdown-item" href="{{url_for('category', category='grocery')}}">Grocery</a></li>
+              <li><a class="dropdown-item" href="{{url_for('category', category='sports')}}">Sports</a></li>
+            </ul>
+            </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          SignUp
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item active" href="{{url_for('admincreate')}}">Admin Signup</a></li>
+                          <li><a class="dropdown-item" href="{{url_for('usercreate')}}">User SignUp</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" style="text-decoration: none;color:black;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Log In
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item active" href="{{url_for('adminlogin')}}">Admin Login</a></li>
+                          <li><a class="dropdown-item" href="{{url_for('userlogin')}}">User Login</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item mt-2">
+                        <a href="{{url_for('logout')}}" class="logout">Logout</a><br>
+                    </li> -->
+                </ul>
+                <form class="d-flex" method="post" action="{{url_for('searchdata')}}">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info alert-dismissible fade show shadow-lg" role="alert" style="z-index:1050; position:fixed; top:80px; right:40px; min-width:300px; border-radius:12px;">
+          <i class="fas fa-info-circle me-2"></i> {{ messages[0] }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="signup-form-wrapper">
+        <form method="post" action="{{url_for('admincreate')}}">
+            <h2 class="form-title">Create User Account</h2>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" name="username" placeholder="Enter full name" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" name='email' placeholder="name@example.com" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" name='password' placeholder="Create a strong password" required>
+            </div>
+
+            <div class="input-group mb-4">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                <input type="text" class="form-control" name="address" placeholder="1234 Main St, City" required>
+            </div>
+
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" name='agree' id="termsCheck" required>
+                <label class="form-check-label" for="termsCheck">I agree to the <a href="#">terms and conditions</a></label>
+            </div>
+            
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-submit">Create Account</button>
+            </div>
+
+            <p class="login-link">Already have an account? <a href="{{url_for('adminlogin')}}">Log In</a></p>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
