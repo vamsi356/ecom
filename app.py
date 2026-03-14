@@ -343,7 +343,7 @@ def adminupdate():
 @app.route('/usercreate', methods=['GET', 'POST'])
 def usercreate():
     if request.method == 'POST':
-        username = request.form['name']
+        username = request.form['username']
         useremail = request.form['email']
         password = request.form['password']
         address = request.form['address']
